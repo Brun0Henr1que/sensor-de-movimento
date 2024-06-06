@@ -77,14 +77,18 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     function Iniciar(){
-        if ('DeviceMotionEvent' in window && ligado == true) {
-            window.addEventListener('devicemotion', event => {
-                document.getElementById('motion-data').innerText =
-                    `Acceleration X: ${event.acceleration.x}, Y: ${event.acceleration.y}, Z: ${event.acceleration.z}`;
-                if(event.acceleration.x > 3.0 || event.acceleration.y > 3.0 || event.acceleration.z > 3.0){
-                    alert('movimento! coordenadas: '+ event.acceleration.x + '|' + event.acceleration.y + '|' + event.acceleration.z)
-                }
-            });
+        if(ligado === true){
+            if ('DeviceMotionEvent' in window) {
+                window.addEventListener('devicemotion', event => {
+                    document.getElementById('motion-data').innerText =
+                        `Acceleration X: ${event.acceleration.x}, Y: ${event.acceleration.y}, Z: ${event.acceleration.z}`;
+                    if(event.acceleration.x > 3.0 || event.acceleration.y > 3.0 || event.acceleration.z > 3.0){
+                        alert('movimento! coordenadas: '+ event.acceleration.x + '|' + event.acceleration.y + '|' + event.acceleration.z)
+                    }
+                });
+            }
+        } else {
+            console.log('Aperte no botão para ligar')
         }
     }
 
