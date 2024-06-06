@@ -59,14 +59,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Motion
 
-    if ('DeviceMotionEvent' in window) {
-        window.addEventListener('devicemotion', event => {
-            document.getElementById('motion-data').innerText =
-                `Acceleration X: ${event.acceleration.x}, Y: ${event.acceleration.y}, Z: ${event.acceleration.z}`;
-            if(event.acceleration.x > 3.0 || event.acceleration.y > 3.0 || event.acceleration.z > 3.0){
-                alert('movimento! coordenadas: '+ event.acceleration.x + '|' + event.acceleration.y + '|' + event.acceleration.z)
-            }
-        });
+    var ligado = false;
+
+    document.getElementById('botao').addEventListener('click', ()=>{
+        if(ligado === false){
+            ligado = true
+            Iniciar()
+            document.getElementById('botao').style.color = 'green'
+            document.getElementById('botao').innerText = 'Ligado'
+        }else{
+            ligado = false
+            Iniciar()
+            document.getElementById('botao').style.color = 'red'
+            document.getElementById('botao').innerText = 'Desligado'
+            document.getElementById('motion-data').innerText = 'Waiting for data...'
+        }
+    })
+
+    function Iniciar(){
+        if ('DeviceMotionEvent' in window && ligado == true) {
+            window.addEventListener('devicemotion', event => {
+                document.getElementById('motion-data').innerText =
+                    `Acceleration X: ${event.acceleration.x}, Y: ${event.acceleration.y}, Z: ${event.acceleration.z}`;
+                if(event.acceleration.x > 3.0 || event.acceleration.y > 3.0 || event.acceleration.z > 3.0){
+                    alert('movimento! coordenadas: '+ event.acceleration.x + '|' + event.acceleration.y + '|' + event.acceleration.z)
+                }
+            });
+        }
     }
 
 //     // Orientation
