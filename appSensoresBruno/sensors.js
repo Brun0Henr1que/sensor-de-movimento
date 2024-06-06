@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('devicemotion', event => {
             document.getElementById('motion-data').innerText =
                 `Acceleration X: ${event.acceleration.x}, Y: ${event.acceleration.y}, Z: ${event.acceleration.z}`;
-            if(event.acceleration.x > 0.1 || event.acceleration.y > 0.1 || event.acceleration.z > 0.1){
+            if(event.acceleration.x > 1 || event.acceleration.y > 1 || event.acceleration.z > 1){
                 alert('movimento')
             }
         });
