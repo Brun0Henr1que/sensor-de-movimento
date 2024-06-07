@@ -61,13 +61,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     var ligado = false;
 
-    document.getElementById('botao').addEventListener('click', ()=>{
-        if(ligado === false){
+    document.getElementById('botao').addEventListener('click', () => {
+        if (ligado === false) {
             ligado = true
             Iniciar()
             document.getElementById('botao').style.color = 'green'
             document.getElementById('botao').innerText = 'Ligado'
-        }else{
+        } else {
             ligado = false
             Iniciar()
             document.getElementById('botao').style.color = 'red'
@@ -76,39 +76,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 
-    function Iniciar(){
-        if(ligado === true){
-            if ('DeviceMotionEvent' in window) {
-                window.addEventListener('devicemotion', event => {
+    function Iniciar() {
+        if ('DeviceMotionEvent' in window) {
+            window.addEventListener('devicemotion', event => {
+                if (ligado === true) {
                     document.getElementById('motion-data').innerText =
                         `Acceleration X: ${event.acceleration.x}, Y: ${event.acceleration.y}, Z: ${event.acceleration.z}`;
-                    if(event.acceleration.x > 3.0 || event.acceleration.y > 3.0 || event.acceleration.z > 3.0){
-                        alert('movimento! coordenadas: '+ event.acceleration.x + '|' + event.acceleration.y + '|' + event.acceleration.z)
+                    if (event.acceleration.x > 3.0 || event.acceleration.y > 3.0 || event.acceleration.z > 3.0) {
+                        alert('movimento! coordenadas: ' + event.acceleration.x + '|' + event.acceleration.y + '|' + event.acceleration.z)
                     }
-                });
-            }
-        } else {
-            console.log('Aperte no botão para ligar')
+                }else{
+                    console.log('aperte no botão para funcionar!')
+                    event.stopImmediatePropagation()
+                    removeEventListener('devicemotion', window)
+                }
+            });
         }
     }
 
-//     // Orientation
-//     if ('DeviceOrientationEvent' in window) {
-//         window.addEventListener('deviceorientation', event => {
-//             document.getElementById('orientation-data').innerText =
-//                 `Alpha: ${event.alpha}, Beta: ${event.beta}, Gamma: ${event.gamma}`;
-//         });
-//     }
+    //     // Orientation
+    //     if ('DeviceOrientationEvent' in window) {
+    //         window.addEventListener('deviceorientation', event => {
+    //             document.getElementById('orientation-data').innerText =
+    //                 `Alpha: ${event.alpha}, Beta: ${event.beta}, Gamma: ${event.gamma}`;
+    //         });
+    //     }
 
-//     // Barometer
-//     if ('Barometer' in window) {
-//         const barometer = new Barometer({frequency: 60});
-//         barometer.addEventListener('reading', () => {
-//             document.getElementById('barometer-data').innerText =
-//                 `Pressure: ${barometer.pressure}`;
-//         });
-//         barometer.start();
-//     }
+    //     // Barometer
+    //     if ('Barometer' in window) {
+    //         const barometer = new Barometer({frequency: 60});
+    //         barometer.addEventListener('reading', () => {
+    //             document.getElementById('barometer-data').innerText =
+    //                 `Pressure: ${barometer.pressure}`;
+    //         });
+    //         barometer.start();
+    //     }
 });
 
 if ('serviceWorker' in navigator) {
